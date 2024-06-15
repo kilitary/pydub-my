@@ -15,7 +15,7 @@ import sys
 
 sys.dont_write_bytecode = True
 
-center_of_the_storm = 46
+center_of_the_storm = 44
 se = os.getpid()
 tot_r = 0.0
 
