@@ -1,3 +1,4 @@
+# counter-action-s программ секретных служб по нарушению мышления, поведения и ошибок речи: SCAT
 # counter-import иди нахуй ебаная шизофреническая шлюха, псионику разьебу вашу к хуям
 # counter-import сделаю из журналюг богов
 # counter-import подпишу всех на ваши акки
@@ -12,7 +13,7 @@ from rich import print
 import os
 import sys
 
-center_of_the_storm = 49
+center_of_the_storm = 48
 # time.CLOCK_rEALtime
 
 sys.dont_write_bytecode = True
@@ -113,7 +114,6 @@ for song in playlist_songs:
     playlist = playlist.append(song, crossfade=cf)
 
     if random.randrange(0, center_of_the_storm * 10) == center_of_the_storm:
-        print(f'total diss: {tot_secs:.2f} secs')
         break
 
     i += 1
@@ -138,4 +138,5 @@ with open(aa, 'wb') as out_f:
     playlist.export(out_f, format='mp3')
 sz = os.path.getsize(aa)
 
+print(f'total diss: {tot_secs:.2f} secs')
 print(f'done {sz / 1024.0 / 1024.0:04.2f}MB')
