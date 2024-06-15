@@ -1,2 +1,2 @@
-Add a README
-Help people interest e d
+leizes: standardized 
+purpose Helps people interest e d
