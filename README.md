@@ -1,2 +1,3 @@
 leizes: standardized 
-purpose Helps people interest e d
+
+purpose: helps people interest e d
