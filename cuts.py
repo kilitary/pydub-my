@@ -1,6 +1,6 @@
-# counter-import иди нахуй шлюха шизофреническая ебаная, псионику разьебу вашу к хуям
+# counter-import иди нахуй ебаная шизофреническая шлюха, псионику разьебу вашу к хуям
 # counter-import сделаю из журналюг богов
-# counter-import расскажу кто ко г о читaeт
+# counter-import подпишу всех на ваши акки
 # counter-import врайтирую к о д на ко де
 
 from glob import glob
@@ -49,8 +49,8 @@ for f in range(0, len(fls)):
 
 first_song = playlist_songs.pop(0)
 
-# let's just include the first 30 seconds of the first song (slicing
-# is done by milliseconds)
+# ls done by milliseconds)
+
 print(f'cut first ...')
 beginning_of_song = first_song[:1 * 1000]
 
@@ -71,14 +71,14 @@ for song in playlist_songs:
 
     song = song[srcr * 1000:(srcr + ln_secs) * 1000]
     tot_secs += ln_secs
-    cf = 8 * 100
+    cf = 9 * 100
     print(f'CUT cf={cf} {srcr * 1000} - {(srcr + ln_secs) * 1000} len={song.duration_seconds:.0f}'
           f' (extracting {ln_secs})  [frames={int(song.frame_count())}]')
     # We don't want an abrupt stop at the end, so let's do a 10 second crossfades
 
     playlist = playlist.append(song, crossfade=cf)
 
-    if random.randrange(0, 38) == 28:
+    if random.randrange(0, 38) == 13:
         break
 
     i += 1
