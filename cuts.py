@@ -6,19 +6,52 @@
 from glob import glob
 from pydub import AudioSegment
 import random
+import time
+from pprint import pprint
+from rich import print
 import os
 import sys
 
+center_of_the_storm = 49
+# time.CLOCK_rEALtime
+
+sys.dont_write_bytecode = True
 se = os.getpid()
+tot_r = 0.0
 print(f'seed={se}')
+print(f'time.time={time.time()}')
+print(f'time.thread_time={time.thread_time()}')
+print(f'time.monotonic={time.monotonic()}')
+print(f'time.perf_counter={time.perf_counter()}')
+
+print(f'time.process_time_ns={time.process_time_ns()}')
+print(f'sys.winver={sys.winver}')
+sys.setswitchinterval(0.141598)
+print(f'sys.getswitchinterval (set)={sys.getswitchinterval()}')
+print(f'sys.gettrace={sys.gettrace()}')
+print(f'sys.dllhandle={sys.dllhandle}')
+pprint(sys.getwindowsversion(), indent=4, compact=True)
+
 random.seed(a=se)
 
+
+def get_t_diff():
+    global tot_r
+    r = max(time.monotonic(), time.perf_counter()) - min(time.monotonic(), time.perf_counter())
+    tot_r += r
+    return r
+
+
 for i in range(1, 20, 2):
-    print(f'{i:02d}={random.randrange(0, i):02d}|', end='')
+    print(f'{i:02d}!{random.randrange(0, i):02d}|', end='')
 
 print(f'\ndone seed')
+print(f'diff: {get_t_diff():.6f}')
+print(f'center_of_the_stоrm={center_of_the_storm}')
 
+diff = get_t_diff()
 n = 0
+max_mb_file = 5
 playlist_songs = []
 names = []
 fls = glob(recursive=True, pathname=r"E:\music\vkmusic\*.mp3")
@@ -31,7 +64,7 @@ for f in range(0, len(fls)):
     print(f'loading #{n:03d}: {mp3_file} {sz / 1024.0 / 1024.0:04.2f}MB',
           end='')
 
-    if sz >= 10 * 1024 * 1024:
+    if sz >= max_mb_file * 1024 * 1024:
         print(f' skipping')
         continue
     else:
@@ -58,11 +91,11 @@ tot_secs = 0
 playlist = beginning_of_song
 i = 0
 for song in playlist_songs:
-    print(f'segmenting {names[i]} (len={song.duration_seconds}) ... ')
+    print(f'segmenting {names[i]} (len={song.duration_seconds:.2f}) ... ')
     rsrc = random.randrange(1, int(song.duration_seconds - 1))
     srcr = random.randrange(0, rsrc)
 
-    if random.randrange(0, 5) == 2:
+    if random.randrange(0, 8) == 2:
         ln_secs = 1
         print(f'short jmp')
     else:
@@ -71,14 +104,16 @@ for song in playlist_songs:
 
     song = song[srcr * 1000:(srcr + ln_secs) * 1000]
     tot_secs += ln_secs
-    cf = 9 * 100
-    print(f'CUT cf={cf} {srcr * 1000} - {(srcr + ln_secs) * 1000} len={song.duration_seconds:.0f}'
-          f' (extracting {ln_secs})  [frames={int(song.frame_count())}]')
+    cf = 10 * 100
+    print(f'CUT #{i:4.0f} cf={cf:04.0f} {srcr * 1000:06.0f} - {(srcr + ln_secs) * 1000:06.0f}'
+          f'len: {song.duration_seconds:04.0f}'
+          f' frames: {int(song.frame_count()):05.0f} diff={get_t_diff():.5f}')
     # We don't want an abrupt stop at the end, so let's do a 10 second crossfades
 
     playlist = playlist.append(song, crossfade=cf)
 
-    if random.randrange(0, 38) == 13:
+    if random.randrange(0, center_of_the_storm * 10) == center_of_the_storm:
+        print(f'total diss: {tot_secs:.2f} secs')
         break
 
     i += 1
@@ -88,14 +123,14 @@ playlist = playlist.fade_out(30)
 
 # hmm I wonder how long it is... ( len(audio_segment) returns milliseconds )
 playlist_length = tot_secs
-aa = rf"h:\temp\{int(playlist_length / 60):00004d}_minutemansed_{i:05d}_cuts_playlist_{se:07d}.mp3"
+aa = rf"h:\temp\{int(playlist_length / 60):00004d}_minutemansened_{i:05d}_cuts_playlist_{se:07d}.mp3"
 
 # lets save it!?
 # no.. it's not that simple...
 # but it's not that hard to d o
 # we can use pydub to resave the file with the
 # same format as
-# the original one
+# the original on e
 # (mp3): but with a diffErent name
 
 with open(aa, 'wb') as out_f:
