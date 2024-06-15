@@ -13,32 +13,30 @@ from rich import print
 import os
 import sys
 
-center_of_the_storm = 48
-# time.CLOCK_rEALtime
-
 sys.dont_write_bytecode = True
+
+center_of_the_storm = 46
 se = os.getpid()
 tot_r = 0.0
+
 print(f'seed={se}')
 print(f'time.time={time.time()}')
 print(f'time.thread_time={time.thread_time()}')
-print(f'time.monotonic={time.monotonic()}')
+print(f'time.monotonic_ns={time.monotonic_ns()}')
 print(f'time.perf_counter={time.perf_counter()}')
-
 print(f'time.process_time_ns={time.process_time_ns()}')
 print(f'sys.winver={sys.winver}')
 sys.setswitchinterval(0.141598)
-print(f'sys.getswitchinterval (set)={sys.getswitchinterval()}')
+print(f'sys.getswitchinterval (set) ={sys.getswitchinterval()}')
 print(f'sys.gettrace={sys.gettrace()}')
 print(f'sys.dllhandle={sys.dllhandle}')
 pprint(sys.getwindowsversion(), indent=4, compact=True)
 
-random.seed(a=se)
-
 
 def get_t_diff():
     global tot_r
-    r = max(time.monotonic(), time.perf_counter()) - min(time.monotonic(), time.perf_counter())
+    r = (max(time.monotonic_ns(), int(time.perf_counter()))
+         - min(time.monotonic_ns(), int(time.perf_counter())))
     tot_r += r
     return r
 
@@ -52,11 +50,14 @@ print(f'center_of_the_stоrm={center_of_the_storm}')
 
 diff = get_t_diff()
 n = 0
-max_mb_file = 5
+max_mb_file = 8
 playlist_songs = []
 names = []
 fls = glob(recursive=True, pathname=r"E:\music\vkmusic\*.mp3")
 sumb = 0
+
+random.seed(a=se)
+
 for f in range(0, len(fls)):
     mp3_file = random.choices(fls)[0]
     sz = os.path.getsize(mp3_file)
@@ -123,7 +124,7 @@ playlist = playlist.fade_out(30)
 
 # hmm I wonder how long it is... ( len(audio_segment) returns milliseconds )
 playlist_length = tot_secs
-aa = rf"h:\temp\{int(playlist_length / 60):00004d}_minutemansened_{i:05d}_cuts_playlist_{se:07d}.mp3"
+aa = rf"h:\temp\pov_{center_of_the_storm:04d}_{int(playlist_length / 60):00004d}_minutemansened_{i:05d}_cuts_playlist_{se:07d}.mp3"
 
 # lets save it!?
 # no.. it's not that simple...
